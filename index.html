@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
   <body>
-    <header>
+    <header class="header">
       <h1>Buscador de series</h1>
-    </header>
-    <main>
-      <form action="" method="GET">
-        <input type="text" class="js-text" placeholder="Ej: Veronica Mars" />
-        <input type="button" value="Buscar" class="js-btn" />
+      <form action="" method="GET" class="search">
+        <input type="text" class="js-text box_text" placeholder="Ej: Veronica Mars" />
+        <input type="button" value="Buscar" class="js-btn btn" />
       </form>
-      <div>
-        <ul class="js-result"></ul>
+    </header>
+    <main class="main">
+      <div class="results-container">
+        <ul class="js-result results"></ul>
       </div>
-      <div>
+      <div class="favourites">
         <h2>Mis series favoritas</h2>
         <ul class="js-favourite"></ul>
       </div>
