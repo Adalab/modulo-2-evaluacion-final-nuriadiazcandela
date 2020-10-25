@@ -1,88 +1,146 @@
 'use strict';
 
 const box = document.querySelector('.js-text');
-const btn = document.querySelector('.js-btn');
-const series = document.querySelector('.js-result');
+const btn = document.querySelector('.js-button');
 const addFavourites = document.querySelector('.js-favourite');
+const defaultImage = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
+const resultSeries = document.querySelector('.js-result');
 
 let seriesResult = [];
-let seriesFavourite = [];
+let favouriteSeries = [];
 
 // FUNCION PARA OBTENER DATOS DE LA API
-function getSerie(ev) {
-  ev.preventDefault();
-  const serie = box.value;
-  fetch(`http://api.tvmaze.com/search/shows?q=${serie}`)
+function getSeries() {
+  let searchinput = box.value;
+  fetch(`http://api.tvmaze.com/search/shows?q=${searchinput}`)
     .then((response) => response.json())
     .then((data) => {
       seriesResult = data;
-      paintSerie(); // PINTAMOS LOS RESULTADOS
-      listenSerie();
+      paintSerie();
+      addListeners();
     });
 }
 
 // FUNCION PARA PINTAR LOS RESULTADOS EN HTML
 function paintSerie() {
-  for (let i = 0; i < seriesResult.length; i++) {
-    let classFavourite;
-    const favoClass = seriesFavourite.indexOf(i);
-    const favourite = favoClass !== -1;
-    if (favourite === true) {
-      classFavourite = 'color-favourite js-fav-item';
+  let seriesCard;
+  let i;
+  let imageCard;
+  resultSeries.innerHTML = '';
+  for (i = 0; i < seriesResult.length; i++) {
+    if (seriesResult[i].show.image === null) {
+      imageCard = defaultImage;
     } else {
-      classFavourite = '';
+      imageCard = seriesResult[i].show.image.medium;
     }
-    if (favourite) {
-      addFavourites.innerHTML += `<li class = "js-fav-item ${classFavourite}" id=${i}><h3 class ="title"> ${seriesResult[i].show.name}</h3>`;
-      addFavourites.innerHTML += `<div >`;
-      addFavourites.innerHTML += `<img src = ${seriesResult[i].show.image.medium} alt = picture show >`;
-      // addFavourites.innerHTML += `</div>`;
-      // addFavourites.innerHTML += `</li>`;
-    } else {
-      series.innerHTML += `<li class = "js-serie-item ${classFavourite}" id=${i}><h3 class ="title"> ${seriesResult[i].show.name}</h3>`;
-      series.innerHTML += `<div >`;
-      series.innerHTML += `<img src = ${seriesResult[i].show.image.medium} alt = picture show >`;
-      series.innerHTML += `</div>`;
-      series.innerHTML += `</li>`;
-    }
+    seriesCard = `<li class="js-serieCard serieCard" id="${seriesResult[i].show.id}">`;
+    seriesCard += `<img class = "image" src="${imageCard}" alt="Imagen serie ${seriesResult[i].show.name}">`;
+    seriesCard += `<h3>${seriesResult[i].show.name}</h3></li>`;
+    resultSeries.innerHTML += seriesCard;
   }
 }
 
-//FAVOURITES evento click sobre el "li"
+function favouritesHandler(ev) {
+  addToFavouritesArray(ev); //funcion para añadir favoritos al array
+  addFavouriteSection(ev); // funcion para pintar favoritos
+}
 
-const favouriteSerie = function (event) {
-  const clicked = parseInt(event.currentTarget.id);
-  const indexFav = seriesFavourite.indexOf(clicked);
-  const isFavourite = indexFav !== -1;
+// FUNCION PARA AÑADIR FAVORITOS AL ARRAY
+function addToFavouritesArray(ev) {
+  const clickedCard = ev.currentTarget;
+  const clickedCardName = clickedCard.querySelector('h3').innerHTML;
+  const favElemIndex = favouriteSeries.findIndex((elem) => elem.show.name === clickedCardName);
 
-  if (isFavourite === false) {
-    seriesFavourite.push(clicked);
-
-    console.log(seriesFavourite);
-    console.log('lo meto');
+  if (favElemIndex === -1) {
+    const favElemnt = seriesResult.find((serie) => serie.show.name === clickedCardName);
+    favouriteSeries.push(favElemnt);
   } else {
-    seriesFavourite.splice(indexFav, 1);
-    console.log('lo quito');
+    favouriteSeries.splice(favElemIndex, 1);
   }
-  paintSerie();
-  listenSerie();
+  updateLocalStorage();
+}
+
+// FUNCION PARA PINTAR FAVORITOS
+function addFavouriteSection() {
+  let seriesFav = '';
+  let i;
+  let favCard;
+  addFavourites.innerHTML = '';
+  for (i = 0; i < favouriteSeries.length; i++) {
+    if (favouriteSeries[i].show.image === null) {
+      favCard = defaultImage;
+    } else {
+      favCard = favouriteSeries[i].show.image.medium;
+    }
+    seriesFav += `<li class="js-serieFavCard serieFavCard" id="${favouriteSeries[i].show.id}">`;
+    seriesFav += `<img src="${favCard}" alt="Imagen serie ${favouriteSeries[i].show.name}">`;
+    seriesFav += `<h3>${favouriteSeries[i].show.name}</h3>`;
+    seriesFav += `<button type="button" class="js-delete resetButton"> ✖️ </button></li>`;
+    addFavourites.innerHTML = seriesFav;
+  }
+  resetFav();
+}
+
+// VACIAR MIS SERIES FAVORITAS
+const btnReset = document.querySelector('.js-reset-all');
+function resetAll() {
+  localStorage.removeItem('favouriteSeries');
+  favouriteSeries = [];
+  updateLocalStorage();
+  addFavouriteSection();
+}
+
+// ELIMINAR DE LA LISTA DE FAVORITOS (REVISARLO) me quita el ultimo de la lista, no el que marco
+function resetOneFav(ev) {
+  const buttonClickedId = parseInt(ev.currentTarget.id);
+  // console.log(buttonClickedId);
+  /// me da un NaN buttonClikedId
+  const serieFavouriteIndex = favouriteSeries.findIndex(
+    (favourite) => favourite.id === buttonClickedId
+  );
+  // console.log(buttonClickedId);
+  const favIndex = favouriteSeries.indexOf(serieFavouriteIndex);
+  favouriteSeries.splice(favIndex, 1);
+
+  updateLocalStorage();
+  addFavouriteSection();
+}
+
+//LOCAL STORAGE
+// GUARDAR
+const updateLocalStorage = () => {
+  const jsonfavouriteSeries = JSON.stringify(favouriteSeries);
+  localStorage.setItem('favouriteSeries', jsonfavouriteSeries);
 };
 
-// FUNCION ESCUCHADORA SOBRE CADA UNA DE LAS SERIES DEL RESULTADO DE LA BUSQUEDA
-function listenSerie() {
-  const seriesItems = document.querySelectorAll('.js-serie-item');
-  for (const seriesItem of seriesItems) {
-    seriesItem.addEventListener('click', favouriteSerie);
+// LEER DEL LOCAL STORAGE
+const getFromLocalStorage = () => {
+  const data = JSON.parse(localStorage.getItem('favouriteSeries'));
+  if (data !== null) {
+    favouriteSeries = data;
   }
-}
-// FUNCION ESCUCHADORA SOBRE SERIE FAVORITA
-function listenFavs() {
-  const favItems = document.querySelectorAll('.js-fav-item');
-  for (const favItem of favItems) {
-    favItem.addEventListener('click', favouriteSerie);
+  addFavouriteSection();
+};
+
+//FUNCION ESCUCHADORA, SOBRE QUIEN HAGO EL CLICK PARA AÑADIR A FAVORITOS
+function addListeners() {
+  let liElem = document.querySelectorAll('.js-serieCard');
+  for (const li of liElem) {
+    li.addEventListener('click', favouritesHandler);
   }
 }
 
-btn.addEventListener('click', getSerie);
+//BOTON DE ELIMINAR DE MIS SERIES FAVORITAS LA SELECCIONADA
+function resetFav() {
+  const resetButtons = document.querySelectorAll('.js-delete');
+  for (let resetButton of resetButtons) {
+    resetButton.addEventListener('click', resetOneFav);
+  }
+}
 
-paintSerie();
+btn.addEventListener('click', getSeries);
+btnReset.addEventListener('click', resetAll);
+
+// AL ARRANCAR LA PAGINA
+getSeries();
+getFromLocalStorage();

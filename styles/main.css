@@ -1,8 +1,11 @@
 * {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Architects Daughter', cursive;
   list-style: none;
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
+
 .header {
   border: black;
   background-color: black;
@@ -10,40 +13,75 @@
   text-align: center;
   padding: 20px;
 }
-.search {
-  text-align: left;
-}
-.box_text {
-  width: 300px;
-}
-.btn {
-  width: 150px;
-  color: blue;
-  border-radius: 10px;
-  border: 2px solid blue;
+
+.js-text {
+  height: 30px;
+  width: 400px;
 }
 .main {
   display: flex;
 }
-.results {
-  /* display: flex;
+
+.favoriteSection {
+  width: 30vw;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  flex-direction: row; */
-  /* background-color: cornflowerblue; */
-  border: 2px solid black;
-  /* width: 50%; */
 }
-.title {
+.resultSection {
+  width: 70vw;
+  padding: 20px;
+}
+
+h3 {
+  font-size: 12px;
   text-align: center;
-  align-content: center;
 }
-/* .favourites {
-  /* flex-direction: column;
-  width: 50%; */
-/* background-color: cadetblue; */
-/* text-align: center; */
-/* } */
-.color-favourite {
-  color: red;
-  background-color: blue;
+.image {
+  width: 130px;
+  height: 180px;
+}
+.serieCard {
+  border-radius: 12px;
+  display: inline-block;
+  padding: 10px;
+  background-color: rgb(238, 208, 208);
+  margin: 7px;
+}
+.serieFavCard {
+  border-radius: 12px;
+  display: inline-block;
+  padding: 10px;
+  background-color: rgb(187, 241, 187);
+  margin: 7px;
+}
+
+.button {
+  color: white;
+  background-color: rgb(173, 17, 140);
+  border-radius: 12px;
+  font-weight: bold;
+  padding: 5px;
+  width: 100px;
+}
+
+img {
+  height: 120px;
+  border-radius: 12px;
+  align-self: center;
+}
+
+.resetButton {
+  padding: 5px;
+  border-radius: 20px;
+  border-color: white;
+  background-color: white;
+}
+
+.button-reset-all {
+  border-radius: 20px;
+  border-color: lightgray;
+  background-color: white;
+  height: 40px;
 }

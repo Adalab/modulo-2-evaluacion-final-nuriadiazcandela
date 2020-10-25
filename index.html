@@ -1,28 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Módulo 2: Evaluación final</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="./styles/main.css" />
+    <title>Evaluación final módulo 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header class="header">
-      <h1>Buscador de series</h1>
-      <form action="" method="GET" class="search">
-        <input type="text" class="js-text box_text" placeholder="Ej: Veronica Mars" />
-        <input type="button" value="Buscar" class="js-btn btn" />
-      </form>
+      <h1>Buscador de Series</h1>
+      <div>
+        <input type="text" class="js-text" placeholder=" Ej: Veronica Mars" />
+        <input type="button" class="js-button button" value="Buscar" />
+      </div>
     </header>
     <main class="main">
-      <div class="results-container">
-        <ul class="js-result results"></ul>
-      </div>
-      <div class="favourites">
-        <h2>Mis series favoritas</h2>
+      <section class="favoriteSection">
+        <div class="subtitle">
+          <h2>Mis series favoritas</h2>
+          <input type="button" value="🗑️ Vaciar" class="js-reset-all button-reset-all" />
+        </div>
         <ul class="js-favourite"></ul>
-      </div>
+      </section>
+      <section class="resultSection">
+        <h2>Resultado de la búsqueda</h2>
+        <ul class="js-result ul-result"></ul>
+      </section>
     </main>
     <script type="text/javascript" src="./js/main.js"></script>
   </body>
 </html>
+
