@@ -47,7 +47,6 @@ function favouritesHandler(ev) {
 
 // FUNCION PARA AÑADIR FAVORITOS AL ARRAY
 function addToFavouritesArray(ev) {
-  //   const clickedCard = ev.currentTarget;
   const clickedCardId = parseInt(ev.currentTarget.id);
   const favId = favouriteSeries.find((elem) => elem.show.id === clickedCardId);
   if (favId === undefined) {
@@ -92,11 +91,9 @@ function resetAll() {
 // ELIMINAR DE LA LISTA DE FAVORITOS
 function resetOneFav(ev) {
   const buttonClickedId = parseInt(ev.currentTarget.id);
-  console.log(buttonClickedId);
   const serieFavouriteId = favouriteSeries.find(
     (favourite) => favourite.show.id === buttonClickedId
   );
-  // console.log(buttonClickedId);
   const favIndex = favouriteSeries.indexOf(serieFavouriteId);
   favouriteSeries.splice(favIndex, 1);
 
@@ -129,7 +126,7 @@ function addListeners() {
   }
 }
 
-//BOTON DE ELIMINAR DE MIS SERIES FAVORITAS LA SELECCIONADA
+//FUNCION ESCUCHADORA, DE ELIMINAR DE MIS SERIES FAVORITAS LA SELECCIONADA
 function resetFav() {
   const resetButtons = document.querySelectorAll('.js-delete');
   for (let resetButton of resetButtons) {
