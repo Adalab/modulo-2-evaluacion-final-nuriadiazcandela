@@ -47,15 +47,14 @@ function favouritesHandler(ev) {
 
 // FUNCION PARA AÑADIR FAVORITOS AL ARRAY
 function addToFavouritesArray(ev) {
-  const clickedCard = ev.currentTarget;
-  const clickedCardName = clickedCard.querySelector('h3').innerHTML;
-  const favElemIndex = favouriteSeries.findIndex((elem) => elem.show.name === clickedCardName);
-
-  if (favElemIndex === -1) {
-    const favElemnt = seriesResult.find((serie) => serie.show.name === clickedCardName);
+  //   const clickedCard = ev.currentTarget;
+  const clickedCardId = parseInt(ev.currentTarget.id);
+  const favId = favouriteSeries.find((elem) => elem.show.id === clickedCardId);
+  if (favId === undefined) {
+    const favElemnt = seriesResult.find((serie) => serie.show.id === clickedCardId);
     favouriteSeries.push(favElemnt);
   } else {
-    favouriteSeries.splice(favElemIndex, 1);
+    favouriteSeries.splice(favId, 1);
   }
   updateLocalStorage();
 }
@@ -75,7 +74,7 @@ function addFavouriteSection() {
     seriesFav += `<li class="js-serieFavCard serieFavCard" id="${favouriteSeries[i].show.id}">`;
     seriesFav += `<img src="${favCard}" alt="Imagen serie ${favouriteSeries[i].show.name}">`;
     seriesFav += `<h3>${favouriteSeries[i].show.name}</h3>`;
-    seriesFav += `<button type="button" class="js-delete resetButton"> ✖️ </button></li>`;
+    seriesFav += `<button class="js-delete resetButton" id="${favouriteSeries[i].show.id}"> ✖️ </button></li>`;
     addFavourites.innerHTML = seriesFav;
   }
   resetFav();
@@ -90,16 +89,15 @@ function resetAll() {
   addFavouriteSection();
 }
 
-// ELIMINAR DE LA LISTA DE FAVORITOS (REVISARLO) me quita el ultimo de la lista, no el que marco
+// ELIMINAR DE LA LISTA DE FAVORITOS
 function resetOneFav(ev) {
   const buttonClickedId = parseInt(ev.currentTarget.id);
-  // console.log(buttonClickedId);
-  /// me da un NaN buttonClikedId
-  const serieFavouriteIndex = favouriteSeries.findIndex(
-    (favourite) => favourite.id === buttonClickedId
+  console.log(buttonClickedId);
+  const serieFavouriteId = favouriteSeries.find(
+    (favourite) => favourite.show.id === buttonClickedId
   );
   // console.log(buttonClickedId);
-  const favIndex = favouriteSeries.indexOf(serieFavouriteIndex);
+  const favIndex = favouriteSeries.indexOf(serieFavouriteId);
   favouriteSeries.splice(favIndex, 1);
 
   updateLocalStorage();
@@ -127,6 +125,7 @@ function addListeners() {
   let liElem = document.querySelectorAll('.js-serieCard');
   for (const li of liElem) {
     li.addEventListener('click', favouritesHandler);
+    //console.log(li);
   }
 }
 
