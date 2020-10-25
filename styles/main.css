@@ -29,9 +29,11 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+
 .resultSection {
   width: 70vw;
   padding: 20px;
+  text-align: center;
 }
 
 h3 {
@@ -84,4 +86,6 @@ img {
   border-color: lightgray;
   background-color: white;
   height: 40px;
+  margin-left: 20px;
+  padding-right: 5px;
 }
