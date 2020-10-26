@@ -79,10 +79,10 @@ function addFavouriteSection() {
     seriesFav += `<li class="js-serieFavCard serieFavCard" id="${favouriteSeries[i].show.id}">`;
     seriesFav += `<img src="${favCard}" alt="Imagen serie ${favouriteSeries[i].show.name}">`;
     seriesFav += `<h3>${favouriteSeries[i].show.name}</h3>`;
-    seriesFav += `<button class="js-delete resetButton" id="${favouriteSeries[i].show.id}"> ✖️ </button></li>`;
+    seriesFav += `<button class="js-delete removeButton" id="${favouriteSeries[i].show.id}"> ✖️ </button></li>`;
     addFavourites.innerHTML = seriesFav;
   }
-  resetFav();
+  removeFav();
 }
 
 // VACIAR MIS SERIES FAVORITAS
@@ -129,15 +129,14 @@ function addListeners() {
   let liElem = document.querySelectorAll('.js-serieCard');
   for (const li of liElem) {
     li.addEventListener('click', favouritesHandler);
-    //console.log(li);
   }
 }
 
 //FUNCION ESCUCHADORA, DE ELIMINAR DE MIS SERIES FAVORITAS LA SELECCIONADA
-function resetFav() {
-  const resetButtons = document.querySelectorAll('.js-delete');
-  for (let resetButton of resetButtons) {
-    resetButton.addEventListener('click', resetOneFav);
+function removeFav() {
+  const btnRemove = document.querySelectorAll('.js-delete');
+  for (let removeButton of btnRemove) {
+    removeButton.addEventListener('click', resetOneFav);
   }
 }
 
