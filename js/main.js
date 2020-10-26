@@ -23,7 +23,7 @@ function getSeries() {
 
 // FUNCION PARA PINTAR LOS RESULTADOS EN HTML
 function paintSerie() {
-  let seriesCard;
+  let seriesCard = '';
   let i;
   let imageCard;
   resultSeries.innerHTML = '';
@@ -34,7 +34,7 @@ function paintSerie() {
       imageCard = seriesResult[i].show.image.medium;
     }
     seriesCard = `<li class="js-serieCard serieCard" id="${seriesResult[i].show.id}">`;
-    seriesCard += `<img class = "image" src="${imageCard}" alt="Imagen serie ${seriesResult[i].show.name}">`;
+    seriesCard += `<img class = "js-image" src="${imageCard}" alt="Imagen serie ${seriesResult[i].show.name}">`;
     seriesCard += `<h3>${seriesResult[i].show.name}</h3></li>`;
     resultSeries.innerHTML += seriesCard;
   }
@@ -72,7 +72,7 @@ function addFavouriteSection() {
       favCard = favouriteSeries[i].show.image.medium;
     }
     seriesFav += `<li class="js-serieFavCard serieFavCard" id="${favouriteSeries[i].show.id}">`;
-    seriesFav += `<img src="${favCard}" alt="Imagen serie ${favouriteSeries[i].show.name}">`;
+    seriesFav += `<img class="imgFav" src="${favCard}" alt="Imagen serie ${favouriteSeries[i].show.name}">`;
     seriesFav += `<h3>${favouriteSeries[i].show.name}</h3>`;
     seriesFav += `<button class="js-delete removeButton" id="${favouriteSeries[i].show.id}"> ✖️ </button></li>`;
     addFavourites.innerHTML = seriesFav;
@@ -80,16 +80,7 @@ function addFavouriteSection() {
   removeFav();
 }
 
-// VACIAR MIS SERIES FAVORITAS
-const btnReset = document.querySelector('.js-reset-all');
-function resetAll() {
-  localStorage.removeItem('favouriteSeries');
-  favouriteSeries = [];
-  updateLocalStorage();
-  addFavouriteSection();
-}
-
-// ELIMINAR DE LA LISTA DE FAVORITOS
+// FUNCION PARA ELIMINAR DE LA LISTA DE FAVORITOS
 function resetOneFav(ev) {
   const buttonClickedId = parseInt(ev.currentTarget.id);
   const serieFavouriteId = favouriteSeries.find(
@@ -99,6 +90,15 @@ function resetOneFav(ev) {
   if (favIndex > -1) {
     favouriteSeries.splice(favIndex, 1);
   }
+  updateLocalStorage();
+  addFavouriteSection();
+}
+
+// VACIAR MIS SERIES FAVORITAS
+const btnReset = document.querySelector('.js-reset-all');
+function resetAll() {
+  localStorage.removeItem('favouriteSeries');
+  favouriteSeries = [];
   updateLocalStorage();
   addFavouriteSection();
 }

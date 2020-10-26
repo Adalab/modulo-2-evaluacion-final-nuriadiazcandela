@@ -40,7 +40,7 @@ h3 {
   font-size: 12px;
   text-align: center;
 }
-.image {
+.js-image {
   width: 130px;
   height: 180px;
 }
@@ -68,7 +68,7 @@ h3 {
   width: 100px;
 }
 
-img {
+.imgFav {
   height: 120px;
   border-radius: 12px;
   align-self: center;

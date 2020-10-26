@@ -1,4 +1,4 @@
-## **Evaluación final <Módulo 2 JavaScript> Nuria Díaz Candela ☺️ **
+## Evaluación final <Módulo 2 JavaScript> Nuria Díaz Candela ☺️
 
 ### Enlace de la página: http://beta.adalab.es/modulo-2-evaluacion-final-nuriadiazcandela/
 
