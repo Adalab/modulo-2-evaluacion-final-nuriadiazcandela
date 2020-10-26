@@ -49,17 +49,12 @@ function favouritesHandler(ev) {
 function addToFavouritesArray(ev) {
   ev.preventDefault();
   const clickedCardId = parseInt(ev.currentTarget.id);
-  console.log(clickedCardId);
   const favId = favouriteSeries.findIndex((elemId) => elemId.show.id === clickedCardId);
-  console.log(favId);
   if (favId === -1) {
-    console.log(favId);
     const favElemnt = seriesResult.find((serie) => serie.show.id === clickedCardId);
     favouriteSeries.push(favElemnt);
-    console.log(favElemnt);
   } else {
     alert('Esta serie ya está en favoritos');
-    // favouriteSeries.splice(favId, 1);
   }
   updateLocalStorage();
 }
