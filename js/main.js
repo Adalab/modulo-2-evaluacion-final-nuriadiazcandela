@@ -47,13 +47,19 @@ function favouritesHandler(ev) {
 
 // FUNCION PARA AÑADIR FAVORITOS AL ARRAY
 function addToFavouritesArray(ev) {
+  ev.preventDefault();
   const clickedCardId = parseInt(ev.currentTarget.id);
-  const favId = favouriteSeries.find((elem) => elem.show.id === clickedCardId);
-  if (favId === undefined) {
+  console.log(clickedCardId);
+  const favId = favouriteSeries.findIndex((elemId) => elemId.show.id === clickedCardId);
+  console.log(favId);
+  if (favId === -1) {
+    console.log(favId);
     const favElemnt = seriesResult.find((serie) => serie.show.id === clickedCardId);
     favouriteSeries.push(favElemnt);
+    console.log(favElemnt);
   } else {
-    favouriteSeries.splice(favId, 1);
+    alert('Esta serie ya está en favoritos');
+    // favouriteSeries.splice(favId, 1);
   }
   updateLocalStorage();
 }
@@ -95,8 +101,9 @@ function resetOneFav(ev) {
     (favourite) => favourite.show.id === buttonClickedId
   );
   const favIndex = favouriteSeries.indexOf(serieFavouriteId);
-  favouriteSeries.splice(favIndex, 1);
-
+  if (favIndex > -1) {
+    favouriteSeries.splice(favIndex, 1);
+  }
   updateLocalStorage();
   addFavouriteSection();
 }
