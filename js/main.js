@@ -35,7 +35,8 @@ function paintSerie() {
     }
     seriesCard = `<li class="js-serieCard serieCard" id="${seriesResult[i].show.id}">`;
     seriesCard += `<img class = "js-image" src="${imageCard}" alt="Imagen serie ${seriesResult[i].show.name}">`;
-    seriesCard += `<h3>${seriesResult[i].show.name}</h3></li>`;
+    seriesCard += `<h3>${seriesResult[i].show.name}</h3>`;
+    seriesCard += `<p>${seriesResult[i].show.status}</p></li>`;
     resultSeries.innerHTML += seriesCard;
   }
 }
@@ -80,6 +81,13 @@ function addFavouriteSection() {
   removeFav();
 }
 
+const log = document.querySelector('.log');
+function favorites() {
+  for (const serie of favouriteSeries) {
+    console.log(serie.show.name);
+  }
+}
+log.addEventListener('click', favorites);
 // FUNCION PARA ELIMINAR DE LA LISTA DE FAVORITOS
 function resetOneFav(ev) {
   const buttonClickedId = parseInt(ev.currentTarget.id);
