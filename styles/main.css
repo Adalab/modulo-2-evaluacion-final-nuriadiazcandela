@@ -48,14 +48,14 @@ h3 {
   border-radius: 12px;
   display: inline-block;
   padding: 10px;
-  background-color: rgb(238, 208, 208);
+  background-color: #ffdfd3;
   margin: 7px;
 }
 .serieFavCard {
   border-radius: 12px;
   display: inline-block;
   padding: 10px;
-  background-color: rgb(187, 241, 187);
+  background-color: #e0bbe4;
   margin: 7px;
 }
 
