@@ -5,6 +5,15 @@
   margin: 0;
   padding: 0;
 }
+body {
+  box-sizing: border-box;
+  height: 100vh;
+  background-image: url('../images/pink-popcorn-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: black;
+}
 
 .header {
   border: black;
@@ -28,12 +37,14 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  color: rgb(173, 17, 140);
 }
 
 .resultSection {
   width: 70vw;
   padding: 20px;
-  text-align: center;
+  text-align: start;
+  color: rgb(173, 17, 140);
 }
 
 h3 {
